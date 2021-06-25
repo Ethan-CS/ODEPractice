@@ -10,6 +10,17 @@ import org.apache.commons.math3.ode.sampling.StepInterpolator;
 
 import java.util.Arrays;
 
+/**
+ * This example is taken from the <a href="https://commons.apache.org/proper/commons-math/userguide/ode.html">user guide
+ * for the Apache Math ODE package.</a>
+ * <p>
+ * The following example shows how to implement the simple two-dimensional problem using double primitives:
+ * <p>
+ * y'0(t) = ω × (c1 - y1(t))
+ * y'1(t) = ω × (y0(t) - c0)
+ * with some initial state y(t0) = (y0(t0), y1(t0)). The exact solution of this problem is that y(t) moves along a
+ * circle centered at c = (c0, c1) with constant angular rate ω.
+ */
 public class CircleODE implements FirstOrderDifferentialEquations {
 
 	private final double[] c;
@@ -31,7 +42,7 @@ public class CircleODE implements FirstOrderDifferentialEquations {
 			}
 
 			public void handleStep(StepInterpolator interpolator, boolean isLast) {
-				double   t = interpolator.getCurrentTime();
+				double t = interpolator.getCurrentTime();
 				double[] y = interpolator.getInterpolatedState();
 				System.out.println(t + " " + y[0] + " " + y[1]);
 			}
@@ -54,14 +65,6 @@ public class CircleODE implements FirstOrderDifferentialEquations {
 	public void computeDerivatives(double t, double[] y, double[] yDot) throws MaxCountExceededException, DimensionMismatchException {
 		yDot[0] = omega * (c[1] - y[1]);
 		yDot[1] = omega * (y[0] - c[0]);
-	}
-
-	public double[] c() {
-		return c;
-	}
-
-	public double omega() {
-		return omega;
 	}
 
 	@Override

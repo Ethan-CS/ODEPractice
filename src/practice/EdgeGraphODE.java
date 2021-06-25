@@ -13,8 +13,8 @@ public record EdgeGraphODE(double beta, double gamma) implements FirstOrderDiffe
 	public static final int S1 = 1;
 	public static final int I0 = 2;
 	public static final int I1 = 3;
-	public static final int S0I1 = 4;
-	public static final int I0S1 = 5;
+	public static final int S0_I1 = 4;
+	public static final int I0_S1 = 5;
 
 	public static void main(String[] args) {
 		FirstOrderIntegrator integrator = new DormandPrince853Integrator(1.0e-8, 100.0,
@@ -36,12 +36,12 @@ public record EdgeGraphODE(double beta, double gamma) implements FirstOrderDiffe
 
 	@Override
 	public void computeDerivatives(double t, double[] y, double[] yDot) throws MaxCountExceededException, DimensionMismatchException {
-		yDot[S0] = -beta * y[S0I1];
-		yDot[S1] = -beta * y[I0S1];
-		yDot[I0] = (gamma * y[S0I1]) - (gamma * y[I0]);
-		yDot[I1] = (gamma * y[I0S1]) - (gamma * y[I1]); // I1
-		yDot[S0I1] = (-beta * y[S0I1]) + (gamma * y[I0S1]) - (gamma * y[I1]);
-		yDot[I0S1] = (gamma * y[S0I1]) - (gamma * y[I0]) - (beta * y[I0S1]);
+		yDot[S0] = -beta * y[S0_I1];
+		yDot[S1] = -beta * y[I0_S1];
+		yDot[I0] = (gamma * y[S0_I1]) - (gamma * y[I0]);
+		yDot[I1] = (gamma * y[I0_S1]) - (gamma * y[I1]); // I1
+		yDot[S0_I1] = (-beta * y[S0_I1]) + (gamma * y[I0_S1]) - (gamma * y[I1]);
+		yDot[I0_S1] = (gamma * y[S0_I1]) - (gamma * y[I0]) - (beta * y[I0_S1]);
 	}
 
 }
